@@ -6,6 +6,7 @@ from .models import Comment
 from .serializers import CommentSerializer
 from django.shortcuts import get_object_or_404
 
+
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def get_all_comments(request):
@@ -13,9 +14,10 @@ def get_all_comments(request):
     serializer = CommentSerializer(comments, many=True)
     return Response(serializer.data)
 
+
 @api_view(['GET', 'POST', 'PUT'])
 @permission_classes([IsAuthenticated])
-def user_comments(request, pk):
+def user_comments(request):
     print(
         'User ', f"{request.user.id} {request.user.email} {request.user.username}"
     )
@@ -31,9 +33,27 @@ def user_comments(request, pk):
         serializer = CommentSerializer(comments, many=True)
         return Response(serializer.data)
 
-    elif request.method == 'PUT':
-        comment = get_object_or_404(Comment, pk=pk)
-        serializer = CommentSerializer(comment, data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save(user=request.user)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    # elif request.method == 'PUT':
+    #     comment = get_object_or_404(Comment, pk=pk)
+    #     serializer = CommentSerializer(comment, data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #     serializer.save(user=request.user)
+    #     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def video_comments(request, video_id):
+    if request.method == 'GET':
+        comments = Comment.objects.filter(video_id=video_id)
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def individual_comment(request, video_id, pk):
+    if request.method == 'GET':
+        comments = Comment.objects.filter(video_id=video_id, pk=pk)
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data)
