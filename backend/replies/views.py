@@ -7,14 +7,14 @@ from .serializers import ReplySerializer
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
-def get_all_comments(request):
+def get_all_replies(request):
     comments = Reply.objects.all()
     serializer = ReplySerializer(comments, many=True)
     return Response(serializer.data)
 
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
-def user_comments(request):
+def user_replies(request):
     print(
         'User ', f"{request.user.id} {request.user.email} {request.user.username}"
     )
