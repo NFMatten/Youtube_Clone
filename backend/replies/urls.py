@@ -2,6 +2,5 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('all/', views.get_all_replies),
-    path('', views.user_replies)
+    path('<str:video_id>/comments/<int:pk>/replies/', views.get_replies),
 ]
