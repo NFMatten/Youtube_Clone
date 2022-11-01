@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "93e6c3dd-9081-4e72-be70-d7052671b3aa",
+		"_postman_id": "a63df393-f433-46ae-9c4d-7c82e6d15628",
 		"name": "DRF_JWT_Backend",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "13396434"
+		"_exporter_id": "23480650"
 	},
 	"item": [
 		{
@@ -234,7 +234,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/comments/all/",
+							"raw": "http://127.0.0.1:8000/api/videos/all/",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -245,7 +245,7 @@
 							"port": "8000",
 							"path": [
 								"api",
-								"comments",
+								"videos",
 								"all",
 								""
 							]
@@ -438,6 +438,14 @@
 								""
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET all replies from video comment",
+					"request": {
+						"method": "GET",
+						"header": []
 					},
 					"response": []
 				}
