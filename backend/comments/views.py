@@ -15,9 +15,9 @@ def get_all_comments(request):
     return Response(serializer.data)
 
 
-@api_view(['GET', 'POST', 'PUT'])
+@api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def user_comments(request):
+def update_comments(request, pk):
     print(
         'User ', f"{request.user.id} {request.user.email} {request.user.username}"
     )
@@ -27,18 +27,6 @@ def user_comments(request):
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    elif request.method == 'GET':
-        comments = Comment.objects.filter(user_id=request.user.id)
-        serializer = CommentSerializer(comments, many=True)
-        return Response(serializer.data)
-
-    # elif request.method == 'PUT':
-    #     comment = get_object_or_404(Comment, pk=pk)
-    #     serializer = CommentSerializer(comment, data=request.data)
-    #     serializer.is_valid(raise_exception=True)
-    #     serializer.save(user=request.user)
-    #     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])
@@ -50,10 +38,16 @@ def video_comments(request, video_id):
         return Response(serializer.data)
 
 
-@api_view(['GET'])
+@api_view(['GET', 'PUT'])
 @permission_classes([IsAuthenticated])
 def individual_comment(request, video_id, pk):
     if request.method == 'GET':
         comments = Comment.objects.filter(video_id=video_id, pk=pk)
         serializer = CommentSerializer(comments, many=True)
         return Response(serializer.data)
+    elif request.method == 'PUT':
+        comment = get_object_or_404(Comment, pk=pk)
+        serializer = CommentSerializer(comment, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(user=request.user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
