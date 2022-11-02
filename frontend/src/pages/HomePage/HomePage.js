@@ -27,19 +27,6 @@ const HomePage = () => {
 		fetchCars();
 	}, [token]);
 
-	useEffect(() => {
-		const getData = async () => {
-			try {
-				const response = await axios.get(
-					`https://www.googleapis.com/youtube/v3/search`,
-					{ params: { key: process.env.REACT_APP_API_KEY } }
-				);
-				console.log("Data", response.data);
-			} catch (error) {}
-		};
-		getData();
-	}, []);
-  
 	return (
 		<div className="container">
 			<h1>Home Page for {user.username}!</h1>
