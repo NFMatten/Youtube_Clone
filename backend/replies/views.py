@@ -6,9 +6,16 @@ from .models import Reply
 from .serializers import ReplySerializer
 
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
-def get_replies(request, video_id, pk):
-    replies = Reply.objects.filter(comment__id=pk, comment__video_id=video_id)
-    serializer = ReplySerializer(replies, many=True)
-    return Response(serializer.data)
+def comment_replies(request, comment_id):
+    if request.method == 'GET':
+        replies = Reply.objects.filter(comment__id=comment_id)
+        serializer = ReplySerializer(replies, many=True)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        serializer = ReplySerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)

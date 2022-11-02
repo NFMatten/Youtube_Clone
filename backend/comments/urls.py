@@ -7,3 +7,6 @@ urlpatterns = [
     path('<str:video_id>/comments/', views.video_comments),
     path('<str:video_id>/comments/<int:pk>/', views.individual_comment)
 ]
+
+
+# remove video_id from path
