@@ -8,7 +8,6 @@ import Typography from "@mui/material/Typography";
 
 const RelatedVideos = (props) => {
   const { relatedVideos } = props;
-  console.log("related videos: ", relatedVideos.length);
   return (
     <Grid>
       {relatedVideos.map((video) => (
