@@ -1,7 +1,10 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import { Grid } from "@mui/material";
 import RelatedVideos from "../RelatedVideos/RelatedVideos";
 import VideoPlayer from "../VideoPlayer/VideoPlayer";
+import Typography from "@mui/material/Typography";
+import CommentForm from "../CommentForm/CommentForm";
 
 const VideoPage = (props) => {
   const { videoId } = useParams();
@@ -9,22 +12,27 @@ const VideoPage = (props) => {
   const selectedVideo = videos.filter(
     (video) => video.id.videoId === videoId
   )[0];
-  console.log(selectedVideo);
+
   const { title, description } = selectedVideo.snippet;
-  console.log(relatedVideos.length);
+
   return (
-    <div>
-      <VideoPlayer videoId={videoId} />
-      <p>
-        Title
-        {title}
-      </p>
-      <p>
-        Description
-        {description}
-      </p>
-      <RelatedVideos relatedVideos={relatedVideos} />
-    </div>
+    <Grid container spacing={2}>
+      <Grid item xs={8} sm={8} justifyContent={"center"} alignItems={"center"}>
+        <VideoPlayer videoId={videoId} />
+        <Typography component="div" variant="h5">
+          {title}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {description}
+        </Typography>
+      </Grid>
+      <Grid item xs={4} sm={4}>
+        <RelatedVideos relatedVideos={relatedVideos} />
+      </Grid>
+      <Grid>
+        <CommentForm />
+      </Grid>
+    </Grid>
   );
 };
 
