@@ -4,8 +4,8 @@ import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { Link } from "react-router-dom";
 
 const SearchPage = (props) => {
   const { videos } = props;
@@ -16,7 +16,12 @@ const SearchPage = (props) => {
         {videos.map((video) => (
           <Grid item xs={12} sm={6} md={4} key={video.id.videoId}>
             <Card sx={{ minHeight: 345 }}>
-              <CardActionArea sx={{ minHeight: 345 }}>
+              <CardActionArea
+                sx={{ minHeight: 345 }}
+                component={Link}
+                to={`/video/${video.id.videoId}`}
+                value={video}
+              >
                 <CardMedia
                   component="img"
                   height={video.snippet.thumbnails.medium.height}
