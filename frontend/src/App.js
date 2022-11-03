@@ -17,48 +17,42 @@ import Footer from "./components/Footer/Footer";
 // Util Imports
 import PrivateRoute from "./utils/PrivateRoute";
 
+import items from "./sampledata";
+
 function App() {
-	const [videos, setVideos] = useState([]);
+	const [videos, setVideos] = useState(items);
 	const [query, setQuery] = useState("");
+	console.log(videos)
+	// useEffect(() => getData(), []);
 
-	useEffect(() => getData(), []);
+	// useEffect(() => {
+	// 	console.log(query, videos);
+	// 	getData(query);
+	// }, [query]);
 
-	useEffect(() => {
-		console.log(query, videos);
-		getData(query);
-	}, [query]);
-
-	const getData = async (query) => {
-		try {
-			const response = await axios.get(
-				`https://www.googleapis.com/youtube/v3/search`,
-				{
-					params: {
-						q: query,
-						key: process.env.REACT_APP_API_KEY,
-						part: "snippet",
-					},
-				}
-			);
-			setVideos(response.data.items);
-		} catch (error) {
-			console.log(error);
-		}
-	};
+	// const getData = async (query) => {
+	// 	try {
+	// 		const response = await axios.get(
+	// 			`https://www.googleapis.com/youtube/v3/search`,
+	// 			{
+	// 				params: {
+	// 					q: query,
+	// 					key: process.env.REACT_APP_API_KEY,
+	// 					part: "snippet",
+	// 				},
+	// 			}
+	// 		);
+	// 		setVideos(response.data.items);
+	// 	} catch (error) {
+	// 		console.log(error);
+	// 	}
+	// };
 
 	return (
 		<div>
 			<Navbar setQuery={setQuery} />
-			<SearchPage videos={videos} />
 			<Routes>
-				<Route
-					path="/"
-					element={
-						<PrivateRoute>
-							<HomePage />
-						</PrivateRoute>
-					}
-				/>
+				<Route path='/search' element={<SearchPage videos={videos}/>} />
 				<Route path="/register" element={<RegisterPage />} />
 				<Route path="/login" element={<LoginPage />} />
 			</Routes>
