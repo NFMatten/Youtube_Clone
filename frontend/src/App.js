@@ -23,7 +23,6 @@ import VideoPage from "./components/VideoPage/VideoPage";
 function App() {
   const [videos, setVideos] = useState(items);
   const [query, setQuery] = useState("");
-  console.log(videos);
   // useEffect(() => getData(), []);
 
   // useEffect(() => {
@@ -48,7 +47,6 @@ function App() {
   // 		console.log(error);
   // 	}
   // };
-  console.log(relatedVideos.length);
   return (
     <div>
       <Navbar setQuery={setQuery} />
