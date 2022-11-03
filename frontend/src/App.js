@@ -59,7 +59,7 @@ function App() {
           element={<VideoPage videos={videos} relatedVideos={relatedVideos} />}
         />
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
