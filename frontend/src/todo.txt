@@ -1,0 +1,24 @@
+FRONTEND TASKS
+update data to YouTube API (remove sample data)
+configure like/dislike buttons
+styling
+  - comments
+  - replies
+  - related videos component
+  - navbar
+  - Login & Register forms
+
+add API call for related videos
+add auth conditional rendering for reply/like/dislike
+  - disable like & dislike buttons
+  - hide or disable reply button
+
+set YouTube API maxResults to 9 or 12
+update Footer?
+
+move SearchPage &VideoPage components to pages directory
+
+BACKEND TASKS
+implement like & dislike functionality (backend)
+- create post request for like
+- create post request for dislike
