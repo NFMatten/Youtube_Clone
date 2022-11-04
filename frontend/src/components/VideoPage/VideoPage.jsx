@@ -55,8 +55,8 @@ const VideoPage = (props) => {
   };
 
   useEffect(() => {
-    getComments(videoId);
-  }, []);
+		getComments(videoId);
+	}, [videoId]);
 
   return (
     <Container>
