@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AuthContext from "../../context/AuthContext";
 import useCustomForm from "../../hooks/useCustomForm";
 import "./LoginPage.css";
@@ -10,6 +10,9 @@ import { styled } from "@mui/material/styles";
 import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 const LoginPage = () => {
   const { loginUser, isServerError } = useContext(AuthContext);
@@ -25,13 +28,11 @@ const LoginPage = () => {
     }
   }, [isServerError]);
 
-  const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-  }));
+  const [showPassword, setShowPassword] = useState(false);
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <Container maxWidth="xs">
@@ -50,16 +51,23 @@ const LoginPage = () => {
           <TextField
             label="Password"
             placeholder="Enter Password..."
-            type="text"
+            type={showPassword ? "test" : "password"}
             name="password"
             value={formData.password}
             onChange={handleInputChange}
           />
 
+          <FormGroup>
+            <FormControlLabel
+              control={<Checkbox onChange={toggleShowPassword} />}
+              label="Show Password"
+            />
+          </FormGroup>
+
           {isServerError ? (
             <p className="error">Login failed, incorrect credentials!</p>
           ) : null}
-          {/* <Link to="/register">Click to register!</Link> */}
+
           <Button href="/register">Click to register!</Button>
           <Button variant="contained" type="submit">
             Login!
