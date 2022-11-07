@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import TextField from "@mui/material/TextField";
-import { Button } from "@mui/material";
-import useAuth from "../../hooks/useAuth";
+import { Search, StyledInputBase } from "../SearchBar/SearchBar.styled";
+import { IconButton } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 
 const SearchBar = (props) => {
 	const { setQuery } = props;
 	const [input, setInput] = useState({});
-	const [user] = useAuth();
 
 	const hanldeChange = (e) => {
 		const { name, value } = e.target;
@@ -14,27 +13,32 @@ const SearchBar = (props) => {
 	};
 
 	const handleOnClick = () => {
+		console.log("onClick", input.search);
 		setQuery(input.search);
 	};
 
 	return (
-		<>
-			{user && (
-				<>
-					<TextField
-						type="search"
-						variant="outlined"
-						onChange={hanldeChange}
-						name="search"
-						value={input.search || ""}
-						placeholder="Search..."
-					/>
-					<Button variant="contained" onClick={handleOnClick}>
-						Search
-					</Button>
-				</>
-			)}
-		</>
+		<Search>
+			<StyledInputBase
+				type="search"
+				name="search"
+				value={input.search || ""}
+				placeholder="Search…"
+				onChange={hanldeChange}
+				InputProps={{
+					endAdornment: (
+						<IconButton
+							sx={{ color: "#fff" }}
+							size="large"
+							aria-label="search"
+							onClick={handleOnClick}
+						>
+							<SearchIcon />
+						</IconButton>
+					),
+				}}
+			/>
+		</Search>
 	);
 };
 
