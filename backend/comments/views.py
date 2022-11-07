@@ -25,17 +25,14 @@ def video_comments(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-@api_view(['GET', 'PUT'])
+@api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
-def individual_comment(request, comment_id):
-    if request.method == 'GET':
-        comments = Comment.objects.filter(pk=comment_id)
-        serializer = CommentSerializer(comments, many=True)
-        return Response(serializer.data)
-    elif request.method == 'PUT':
+def like_comment(request, comment_id, like_action):
+    if request.method == 'PATCH':
         comment = get_object_or_404(Comment, pk=comment_id)
-        serializer = CommentSerializer(comment, data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save(user=request.user)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        if like_action == 'like':
+            comment.likes += 1
+        elif like_action == 'dislike':
+            comment.dislikes += 1
+        comment.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
