@@ -37,6 +37,7 @@ const LoginPage = () => {
     <Container maxWidth="xs">
       <form className="form" onSubmit={handleSubmit}>
         <Stack spacing={2}>
+          <h2>Sign in to YouTube Clone</h2>
           <TextField
             label="Username"
             placeholder="Enter Username..."
