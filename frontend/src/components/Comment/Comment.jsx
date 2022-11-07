@@ -3,100 +3,135 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import ReplyForm from "../ReplyForm/ReplyForm";
 import ReplyList from "../ReplyList/ReplyList";
-import Button from "@mui/material/Button";
 import useAuth from "../../hooks/useAuth";
+import ListItem from "@mui/material/ListItem";
+import Divider from "@mui/material/Divider";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import { Typography } from "@mui/material";
+import {
+	ExpandMore,
+	ExpandLess,
+	ThumbUp,
+	ThumbDown,
+} from "@mui/icons-material";
 
 const Comment = (props) => {
-  const { id: commentId, text, likes, dislikes, getComments } = props;
-  const { id: userId, username } = props.user;
-  const { videoId } = useParams();
+	const { id: commentId, text, likes, dislikes, getComments } = props;
+	const { id: userId, username } = props.user;
+	const { videoId } = useParams();
 
-  const [showReplyForm, setShowReplyForm] = useState(false);
-  const [replies, setReplies] = useState([]);
-  const [user, token] = useAuth();
+	const [showReplyForm, setShowReplyForm] = useState(false);
+	const [showReplies, setShowReplies] = useState(false);
+	const [replies, setReplies] = useState([]);
+	const [user, token] = useAuth();
 
-  useEffect(() => getReplies(commentId), []);
+	useEffect(() => getReplies(commentId), []);
 
-  const toggleForm = () => setShowReplyForm(!showReplyForm);
+	const toggleForm = () => setShowReplyForm(!showReplyForm);
+	const toggleReplies = () => setShowReplies(!showReplies);
 
-  const addReply = async (replyObj) => {
-    const finalReply = {
-      user: userId,
-      comment_id: commentId,
-      ...replyObj,
-    };
+	const addReply = async (replyObj) => {
+		const finalReply = {
+			user: userId,
+			comment_id: commentId,
+			...replyObj,
+		};
 
-    try {
-      const response = await axios.post(
-        `http://localhost:8000/api/replies/${commentId}/`,
-        finalReply,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+		try {
+			const response = await axios.post(
+				`http://localhost:8000/api/replies/${commentId}/`,
+				finalReply,
+				{
+					headers: { Authorization: `Bearer ${token}` },
+				}
+			);
 
-      if (response.status === 201) {
-        toggleForm();
-        getReplies(commentId);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+			if (response.status === 201) {
+				toggleForm();
+				getReplies(commentId);
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
-  const getReplies = async (commentId) => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8000/api/replies/${commentId}/`
-      );
-      if (response.status === 200) setReplies(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+	const getReplies = async (commentId) => {
+		try {
+			const response = await axios.get(
+				`http://localhost:8000/api/replies/${commentId}/`
+			);
+			if (response.status === 200) setReplies(response.data);
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
-  const likeAction = async (commentId, likeAction) => {
-    try {
-      const response = await axios.patch(
-        `http://localhost:8000/api/comments/${commentId}/${likeAction}/`,
-        {},
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      if (response.status === 204) getComments(videoId);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+	const likeAction = async (commentId, likeAction) => {
+		try {
+			const response = await axios.patch(
+				`http://localhost:8000/api/comments/${commentId}/${likeAction}/`,
+				{},
+				{
+					headers: { Authorization: `Bearer ${token}` },
+				}
+			);
+			if (response.status === 204) getComments(videoId);
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
-  return (
-    <div>
-      <h4>
-        {commentId} - {username}
-      </h4>
-      <h4>{text}</h4>
-      <div>
-        <Button disabled={!user} onClick={() => likeAction(commentId, "like")}>
-          Like {likes}
-        </Button>
-        <Button
-          disabled={!user}
-          onClick={() => likeAction(commentId, "dislike")}
-        >
-          Dislike {dislikes}
-        </Button>
-        {user && <Button onClick={toggleForm}>Reply</Button>}
-      </div>
-      {showReplyForm && <ReplyForm addReply={addReply} />}
-      <div>
-        <span>Replies ({replies.length ? replies.length : "0"})</span>
-      </div>
-      <div>
-        <ReplyList replies={replies} />
-      </div>
-    </div>
-  );
+	return (
+		<div>
+			<ListItem alignItems="flex-start">
+				<ListItemAvatar>
+					<Avatar alt={username} />
+				</ListItemAvatar>
+				<ListItemText
+					primary={<Typography variant="h6">{username}</Typography>}
+					secondary={
+						<React.Fragment>
+							<Typography variant="body1">{text}</Typography>
+							<div>
+								<IconButton
+									size="small"
+									disabled={!user}
+									onClick={() => likeAction(commentId, "like")}
+								>
+									<ThumbUp fontSize="small" sx={{ mr: 0.5 }} />
+									<Typography>{likes}</Typography>
+								</IconButton>
+								<IconButton
+									size="small"
+									disabled={!user}
+									onClick={() => likeAction(commentId, "dislike")}
+								>
+									<ThumbDown fontSize="small" sx={{ mr: 0.5 }} />
+									<Typography>{dislikes}</Typography>
+								</IconButton>
+								{user && <Button onClick={toggleForm}>Reply</Button>}
+							</div>
+							{showReplyForm && <ReplyForm addReply={addReply} />}
+							{replies.length > 0 && (
+								<Button
+									startIcon={showReplies ? <ExpandLess /> : <ExpandMore />}
+									onClick={toggleReplies}
+								>
+									{replies.length} {replies.length === 1 ? "reply" : "replies"}
+								</Button>
+							)}
+							{showReplies && <ReplyList replies={replies} />}
+						</React.Fragment>
+					}
+				/>
+			</ListItem>
+			<Divider variant="inset" component="li" />
+		</div>
+	);
 };
 
 export default Comment;
