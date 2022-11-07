@@ -1,8 +1,15 @@
 import React, { useContext, useEffect } from "react";
 import AuthContext from "../../context/AuthContext";
 import useCustomForm from "../../hooks/useCustomForm";
-import { Link } from "react-router-dom";
 import "./LoginPage.css";
+
+// Material
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
+import { styled } from "@mui/material/styles";
+import Container from "@mui/material/Container";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 const LoginPage = () => {
   const { loginUser, isServerError } = useContext(AuthContext);
@@ -18,34 +25,47 @@ const LoginPage = () => {
     }
   }, [isServerError]);
 
+  const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+  }));
+
   return (
-    <div className="container">
+    <Container maxWidth="xs">
       <form className="form" onSubmit={handleSubmit}>
-        <label>
-          Username:{" "}
-          <input
+        <Stack spacing={2}>
+          <TextField
+            label="Username"
+            placeholder="Enter Username..."
             type="text"
             name="username"
             value={formData.username}
             onChange={handleInputChange}
           />
-        </label>
-        <label>
-          Password:{" "}
-          <input
+
+          <TextField
+            label="Password"
+            placeholder="Enter Password..."
             type="text"
             name="password"
             value={formData.password}
             onChange={handleInputChange}
           />
-        </label>
-        {isServerError ? (
-          <p className="error">Login failed, incorrect credentials!</p>
-        ) : null}
-        <Link to="/register">Click to register!</Link>
-        <button>Login!</button>
+
+          {isServerError ? (
+            <p className="error">Login failed, incorrect credentials!</p>
+          ) : null}
+          {/* <Link to="/register">Click to register!</Link> */}
+          <Button href="/register">Click to register!</Button>
+          <Button variant="contained" type="submit">
+            Login!
+          </Button>
+        </Stack>
       </form>
-    </div>
+    </Container>
   );
 };
 
