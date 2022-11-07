@@ -27,7 +27,6 @@ const Comment = (props) => {
     };
 
     try {
-      console.log("Final Reply Object:", finalReply);
       const response = await axios.post(
         `http://localhost:8000/api/replies/${commentId}/`,
         finalReply,
@@ -57,7 +56,6 @@ const Comment = (props) => {
   };
 
   const likeAction = async (commentId, likeAction) => {
-    console.log(`CommentId: ${commentId} likeAction: ${likeAction}`);
     try {
       const response = await axios.patch(
         `http://localhost:8000/api/comments/${commentId}/${likeAction}/`,

@@ -48,7 +48,6 @@ const VideoPage = (props) => {
         `http://127.0.0.1:8000/api/comments/?video_id=${videoId}`
       );
       setComments(response.data);
-      console.log(response.data);
     } catch (error) {
       console.log(error);
     }

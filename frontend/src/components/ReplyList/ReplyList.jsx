@@ -2,18 +2,17 @@ import React from "react";
 import Reply from "../Reply/Reply";
 
 const ReplyList = (props) => {
-	const { replies } = props;
-	console.log("Replies", replies);
+  const { replies } = props;
 
-	return (
-		<div>
-			<ul>
-				{replies.map(({ id, user: { username }, text }) => (
+  return (
+    <div>
+      <ul>
+        {replies.map(({ id, user: { username }, text }) => (
           <Reply key={id} username={username} text={text} />
-				))}
-			</ul>
-		</div>
-	);
+        ))}
+      </ul>
+    </div>
+  );
 };
 
 export default ReplyList;
