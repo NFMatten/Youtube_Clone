@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import ReplyForm from "../ReplyForm/ReplyForm";
 import ReplyList from "../ReplyList/ReplyList";
@@ -6,8 +7,9 @@ import Button from "@mui/material/Button";
 import useAuth from "../../hooks/useAuth";
 
 const Comment = (props) => {
-  const { id: commentId, text, likes, dislikes } = props;
+  const { id: commentId, text, likes, dislikes, getComments } = props;
   const { id: userId, username } = props.user;
+  const { videoId } = useParams();
 
   const [showReplyForm, setShowReplyForm] = useState(false);
   const [replies, setReplies] = useState([]);
@@ -54,6 +56,22 @@ const Comment = (props) => {
     }
   };
 
+  const likeAction = async (commentId, likeAction) => {
+    console.log(`CommentId: ${commentId} likeAction: ${likeAction}`);
+    try {
+      const response = await axios.patch(
+        `http://localhost:8000/api/comments/${commentId}/${likeAction}/`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      if (response.status === 204) getComments(videoId);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       <h4>
@@ -61,8 +79,15 @@ const Comment = (props) => {
       </h4>
       <h4>{text}</h4>
       <div>
-        <Button disabled={!user}>Like {likes}</Button>
-        <Button disabled={!user}>Dislike {dislikes}</Button>
+        <Button disabled={!user} onClick={() => likeAction(commentId, "like")}>
+          Like {likes}
+        </Button>
+        <Button
+          disabled={!user}
+          onClick={() => likeAction(commentId, "dislike")}
+        >
+          Dislike {dislikes}
+        </Button>
         {user && <Button onClick={toggleForm}>Reply</Button>}
       </div>
       {showReplyForm && <ReplyForm addReply={addReply} />}
