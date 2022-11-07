@@ -64,10 +64,10 @@ const NavBar = (props) => {
 			{user ? (
 				<MenuItem onClick={logoutUser}>Logout</MenuItem>
 			) : (
-				<>
+				<div>
 					<MenuItem onClick={() => navigate("/login")}>Login</MenuItem>
 					<MenuItem onClick={() => navigate("/register")}>Register</MenuItem>
-				</>
+				</div>
 			)}
 		</Menu>
 	);
