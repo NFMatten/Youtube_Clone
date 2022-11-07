@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import AuthContext from "../../context/AuthContext";
 import useCustomForm from "../../hooks/useCustomForm";
 
@@ -9,9 +9,18 @@ import { styled } from "@mui/material/styles";
 import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 const RegisterPage = () => {
   const { registerUser } = useContext(AuthContext);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
   const defaultValues = {
     username: "",
     email: "",
@@ -28,6 +37,7 @@ const RegisterPage = () => {
     <Container maxWidth="sm">
       <form className="form" onSubmit={handleSubmit}>
         <Stack spacing={2}>
+          <h2>Register with YouTube Clone</h2>
           <TextField
             placeholder="Enter Username..."
             label="Username"
@@ -67,11 +77,17 @@ const RegisterPage = () => {
           <TextField
             placeholder="Enter Password..."
             label="Password"
-            type="text"
+            type={showPassword ? "text" : "password"}
             name="password"
             value={formData.password}
             onChange={handleInputChange}
           />
+          <FormGroup>
+            <FormControlLabel
+              control={<Checkbox onChange={toggleShowPassword} />}
+              label="Show Password"
+            />
+          </FormGroup>
 
           <p style={{ fontSize: "12px" }}>
             NOTE: Make this an uncommon password with characters, numbers, and
@@ -80,6 +96,7 @@ const RegisterPage = () => {
           <Button variant="contained" type="submit">
             Register!
           </Button>
+          <Button href="/login">Already Registered? Login</Button>
         </Stack>
       </form>
     </Container>
