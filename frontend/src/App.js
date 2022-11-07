@@ -20,47 +20,47 @@ import PrivateRoute from "./utils/PrivateRoute";
 import { items, relatedVideos } from "./sampledata";
 
 function App() {
-  const [videos, setVideos] = useState(items);
-  const [query, setQuery] = useState("");
-  // useEffect(() => getData(), []);
+	const [videos, setVideos] = useState(items);
+	const [query, setQuery] = useState("");
+	// useEffect(() => getData(), []);
 
-  // useEffect(() => {
-  // 	console.log(query, videos);
-  // 	getData(query);
-  // }, [query]);
+	// useEffect(() => {
+	// 	console.log(query, videos);
+	// 	getData(query);
+	// }, [query]);
 
-  // const getData = async (query) => {
-  // 	try {
-  // 		const response = await axios.get(
-  // 			`https://www.googleapis.com/youtube/v3/search`,
-  // 			{
-  // 				params: {
-  // 					q: query,
-  // 					key: process.env.REACT_APP_API_KEY,
-  // 					part: "snippet",
-  // 				},
-  // 			}
-  // 		);
-  // 		setVideos(response.data.items);
-  // 	} catch (error) {
-  // 		console.log(error);
-  // 	}
-  // };
-  return (
-    <div>
-      <Navbar setQuery={setQuery} />
-      <Routes>
-        <Route exact path="/" element={<SearchPage videos={videos} />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route
-          path="/video/:videoId"
-          element={<VideoPage videos={videos} relatedVideos={relatedVideos} />}
-        />
-      </Routes>
-      {/* <Footer /> */}
-    </div>
-  );
+	// const getData = async (query) => {
+	// 	try {
+	// 		const response = await axios.get(
+	// 			`https://www.googleapis.com/youtube/v3/search`,
+	// 			{
+	// 				params: {
+	// 					q: query,
+	// 					key: process.env.REACT_APP_API_KEY,
+	// 					part: "snippet",
+	// 				},
+	// 			}
+	// 		);
+	// 		setVideos(response.data.items);
+	// 	} catch (error) {
+	// 		console.log(error);
+	// 	}
+	// };
+	return (
+		<div>
+			<Navbar setQuery={setQuery} />
+			<Routes>
+				<Route exact path="/" element={<SearchPage videos={videos} />} />
+				<Route path="/register" element={<RegisterPage />} />
+				<Route path="/login" element={<LoginPage />} />
+				<Route
+					path="/video/:videoId"
+					element={<VideoPage videos={videos} relatedVideos={relatedVideos} />}
+				/>
+			</Routes>
+			{/* <Footer /> */}
+		</div>
+	);
 }
 
 export default App;
