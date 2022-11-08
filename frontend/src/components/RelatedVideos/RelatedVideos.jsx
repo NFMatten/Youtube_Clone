@@ -16,17 +16,23 @@ const RelatedVideos = (props) => {
       {relatedVideos.map((video) => (
         <Card key={video.id.videoId} sx={{ marginBottom: "10px" }}>
           <CardActionArea
-            sx={{ display: "flex" }}
+            sx={{ display: "flex", justifyContent: "flex-start" }}
             component={Link}
             to={`/video/${video.id.videoId}`}
           >
-            <Box sx={{ display: "flex", flexDirection: "row" }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                height: video.snippet.thumbnails.default.height,
+              }}
+            >
               <CardContent sx={{ flex: "0" }}>
                 <div
                   style={{
                     overflow: "hidden",
                     textOverflow: "ellipsis",
-                    width: "11rem",
+                    width: "9rem",
                   }}
                 >
                   <Typography
@@ -37,13 +43,29 @@ const RelatedVideos = (props) => {
                   >
                     {video.snippet.title}
                   </Typography>
+                  <Typography
+                    variant="subtitle2"
+                    component="div"
+                    marginTop="5px"
+                    paddingBottom="-5px"
+                  >
+                    {video.snippet.channelTitle}
+                  </Typography>
                 </div>
               </CardContent>
               <CardMedia
                 component="img"
                 sx={{
-                  width: video.snippet.thumbnails.default.width,
+                  minWidth: video.snippet.thumbnails.default.width,
+                  minHeight: video.snippet.thumbnails.default.height,
+                  width: 150,
+                  height: 120,
+                  position: "absolute",
+                  right: 0,
                   flex: "1",
+                  top: 0,
+                  bottom: 0,
+                  margin: "auto",
                 }}
                 image={video.snippet.thumbnails.default.url}
                 alt="Live from space album cover"
