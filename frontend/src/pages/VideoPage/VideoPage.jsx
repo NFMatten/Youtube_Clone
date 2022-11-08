@@ -13,8 +13,9 @@ const VideoPage = () => {
 	const [video, setVideo] = useState(null);
 	const [relatedVideos, setRelatedVideos] = useState([]);
 	const [comments, setComments] = useState([]);
-
 	const { videoId } = useParams();
+
+	// eslint-disable-next-line
 	const [user, token] = useAuth();
 
 	useEffect(() => {
@@ -98,7 +99,6 @@ const VideoPage = () => {
 			<Grid container spacing={2} columnSpacing={12}>
 				{video && (
 					<>
-						{console.log("Video", video)}
 						<Grid item xs={8} sm={8}>
 							<Grid>
 								<VideoPlayer videoId={videoId} />
