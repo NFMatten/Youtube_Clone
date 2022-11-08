@@ -32,7 +32,7 @@ const RelatedVideos = (props) => {
                   style={{
                     overflow: "hidden",
                     textOverflow: "ellipsis",
-                    width: "9rem",
+                    width: "15rem",
                   }}
                 >
                   <Typography
@@ -40,6 +40,7 @@ const RelatedVideos = (props) => {
                     component="div"
                     variant="body1"
                     sx={{ overflow: "hidden" }}
+                    title={video.snippet.title}
                   >
                     {video.snippet.title}
                   </Typography>
@@ -48,6 +49,7 @@ const RelatedVideos = (props) => {
                     component="div"
                     marginTop="5px"
                     paddingBottom="-5px"
+                    title={video.snippet.channelTitle}
                   >
                     {video.snippet.channelTitle}
                   </Typography>
@@ -68,7 +70,8 @@ const RelatedVideos = (props) => {
                   margin: "auto",
                 }}
                 image={video.snippet.thumbnails.default.url}
-                alt="Live from space album cover"
+                alt={video.snippet.title}
+                title={video.snippet.title}
               />
             </Box>
           </CardActionArea>
