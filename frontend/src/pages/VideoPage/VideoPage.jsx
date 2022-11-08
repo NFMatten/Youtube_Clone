@@ -95,7 +95,7 @@ const VideoPage = () => {
   };
 
   return (
-    <Container>
+    <Container maxWidth="xl">
       <Grid container spacing={2} columnSpacing={12}>
         {video && (
           <>
