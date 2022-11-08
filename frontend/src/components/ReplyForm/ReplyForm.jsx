@@ -24,9 +24,15 @@ const ReplyForm = (props) => {
 				value={value}
 				onChange={handleChange}
 				fullWidth
-				margin="normal"
+				// margin="normal"
+				sx={{ mb: 1 }}
 			/>
-			<Button variant="contained" type="submit" onClick={handleSubmit}>
+			<Button
+				sx={{ mb: 1 }}
+				variant="contained"
+				type="submit"
+				onClick={handleSubmit}
+			>
 				Reply
 			</Button>
 		</div>
