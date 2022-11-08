@@ -11,7 +11,7 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-import { Typography } from "@mui/material";
+import { Typography, Stack } from "@mui/material";
 import {
 	ExpandMore,
 	ExpandLess,
@@ -86,7 +86,7 @@ const Comment = (props) => {
 	};
 
 	return (
-		<div>
+		<React.Fragment>
 			<ListItem alignItems="flex-start">
 				<ListItemAvatar>
 					<Avatar alt={username} />
@@ -94,9 +94,18 @@ const Comment = (props) => {
 				<ListItemText
 					primary={<Typography variant="h6">{username}</Typography>}
 					secondary={
-						<React.Fragment>
-							<Typography variant="body1">{text}</Typography>
-							<div>
+						<Stack
+							component="span"
+							sx={{
+								display: "flex",
+								flexDirection: "column",
+								alignItems: "flex-start",
+							}}
+						>
+							<Typography component="span" variant="body1">
+								{text}
+							</Typography>
+							<Stack component="span" direction="row">
 								<IconButton
 									size="small"
 									disabled={!user}
@@ -114,23 +123,30 @@ const Comment = (props) => {
 									<Typography>{dislikes}</Typography>
 								</IconButton>
 								{user && <Button onClick={toggleForm}>Reply</Button>}
-							</div>
-							{showReplyForm && <ReplyForm addReply={addReply} />}
-							{replies.length > 0 && (
-								<Button
-									startIcon={showReplies ? <ExpandLess /> : <ExpandMore />}
-									onClick={toggleReplies}
-								>
-									{replies.length} {replies.length === 1 ? "reply" : "replies"}
-								</Button>
-							)}
-							{showReplies && <ReplyList replies={replies} />}
-						</React.Fragment>
+							</Stack>
+						</Stack>
 					}
 				/>
 			</ListItem>
+			<Stack sx={{ ml: 10 }}>
+				{showReplyForm && <ReplyForm addReply={addReply} />}
+				{replies.length > 0 && (
+					<Button
+						sx={{
+							display: "flex",
+							justifyContent: "flex-start",
+							width: "max-content",
+						}}
+						startIcon={showReplies ? <ExpandLess /> : <ExpandMore />}
+						onClick={toggleReplies}
+					>
+						{replies.length} {replies.length === 1 ? "reply" : "replies"}
+					</Button>
+				)}
+				{showReplies && <ReplyList replies={replies} />}
+			</Stack>
 			<Divider variant="inset" component="li" />
-		</div>
+		</React.Fragment>
 	);
 };
 
