@@ -15,9 +15,9 @@ const SearchPage = (props) => {
       <Grid container rowSpacing={2} columnSpacing={2}>
         {videos.map((video) => (
           <Grid item xs={12} sm={6} md={4} key={video.id.videoId}>
-            <Card sx={{ minHeight: 345 }}>
+            <Card sx={{ height: 360 }}>
               <CardActionArea
-                sx={{ minHeight: 345 }}
+                sx={{ height: 360 }}
                 component={Link}
                 to={`/video/${video.id.videoId}`}
                 value={video}
@@ -28,11 +28,15 @@ const SearchPage = (props) => {
                   image={video.snippet.thumbnails.medium.url}
                   alt={video.snippet.title}
                 />
-                <CardContent>
+                <CardContent sx={{ bgcolor: "red" }}>
                   <Typography gutterBottom variant="h6" component="div">
                     {video.snippet.title}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ overflow: "hidden" }}
+                  >
                     {video.snippet.description}
                   </Typography>
                 </CardContent>
