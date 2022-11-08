@@ -29,6 +29,7 @@ const Comment = (props) => {
 	const [replies, setReplies] = useState([]);
 	const [user, token] = useAuth();
 
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	useEffect(() => getReplies(commentId), []);
 
 	const toggleForm = () => setShowReplyForm(!showReplyForm);
