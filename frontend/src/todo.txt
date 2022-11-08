@@ -4,14 +4,12 @@ add API call for related videos
   -set YouTube API maxResults to 9 or 12
 
 styling
-  - comments
-  - replies
-  - related videos component
-  - navbar
-  - Login & Register forms
-
+- related videos component
+  
 update Footer?
-clean up console logs
+
+
+
 
 
 
@@ -21,9 +19,12 @@ DONE
   - disable like & dislike buttons
   configure like/dislike buttons
 move SearchPage &VideoPage components to pages directory
+clean up console logs
 
-
-
+styling
+  - Login & Register forms
+  - navbar
+  
 
 BACKEND TASKS
 implement like & dislike functionality (backend)
