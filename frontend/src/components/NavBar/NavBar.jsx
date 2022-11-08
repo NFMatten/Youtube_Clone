@@ -13,7 +13,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import Link from "@mui/material/Link";
 
 const NavBar = (props) => {
-	const { setQuery } = props;
+	const { fetchSearchVideos } = props;
 
 	const { logoutUser, user } = useContext(AuthContext);
 	const [anchorEl, setAnchorEl] = useState(null);
@@ -29,7 +29,7 @@ const NavBar = (props) => {
 	};
 
 	return (
-		<Box sx={{ flexGrow: 1, paddingBottom: "2.5rem" }}>
+		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position="static" sx={{ backgroundColor: "#333" }}>
 				<Toolbar>
 					<Box sx={{ display: "flex", flexGrow: 1, justifyContent: "start" }}>
@@ -52,7 +52,7 @@ const NavBar = (props) => {
 						</Link>
 					</Box>
 					<Box sx={{ flexGrow: 1 }}>
-						<SearchBar setQuery={setQuery} />
+						<SearchBar fetchSearchVideos={fetchSearchVideos} />
 					</Box>
 					<Box
 						sx={{
