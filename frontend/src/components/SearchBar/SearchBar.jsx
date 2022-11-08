@@ -4,7 +4,7 @@ import { IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
 const SearchBar = (props) => {
-	const { setQuery } = props;
+	const { fetchSearchVideos } = props;
 	const [input, setInput] = useState({});
 
 	const hanldeChange = (e) => {
@@ -13,8 +13,7 @@ const SearchBar = (props) => {
 	};
 
 	const handleOnClick = () => {
-		console.log("onClick", input.search);
-		setQuery(input.search);
+		fetchSearchVideos(input.search);
 	};
 
 	return (
